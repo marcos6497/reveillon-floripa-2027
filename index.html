@@ -50069,8 +50069,12 @@ Praia do campeche</p>
 
     function initMap() {
       map = L.map('map').setView([-27.52, -48.46], 11);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        maxZoom: 19
+      // OpenStreetMap: sem chave (CARTO passou a exigir API key). O OSM exige saber o site de origem,
+      // então a camada sobrescreve o no-referrer da página, que é só para as fotos do Airbnb.
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        referrerPolicy: 'strict-origin-when-cross-origin',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
       }).addTo(map);
 
       RAW_LISTINGS.forEach(item => {
